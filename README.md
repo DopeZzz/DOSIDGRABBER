@@ -1,6 +1,6 @@
-# DarkOrbit SSID Grabber
+# DarkOrbit SID Grabber
 
-This program allows users to retrieve the SSID and server of their DarkOrbit account.
+This program allows users to retrieve the SID and server of their DarkOrbit account.
 
 ## Prerequisites
 
