@@ -13,8 +13,8 @@ Before running the main program, make sure you have Python installed on your sys
 
 ## Usage
 
-1. **Run the Program**: Once you've installed the required libraries, you can start the main program. To do this, double-click on the `DOSSIDGRABBER.py` file.
+1. **Run the Program**: Once you've installed the required libraries, you can start the main program. To do this, double-click on the `DOSIDGRABBER.py` file.
 2. **Follow Instructions**: Input your username and password to retrieve the SID and server of your DarkOrbit account when prompted.
 
 
-![Captura](https://github.com/DopeZzz/DOSSIDGRABBER/assets/46748542/c623d788-1938-4a72-9803-0f5808f77487)
+![Captura](https://github.com/DopeZzz/DOSIDGRABBER/assets/46748542/c623d788-1938-4a72-9803-0f5808f77487)
