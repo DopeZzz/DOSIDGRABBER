@@ -18,3 +18,5 @@ Before running the main program, make sure you have Python installed on your sys
 
 
 ![Captura](https://github.com/DopeZzz/DOSIDGRABBER/assets/46748542/c623d788-1938-4a72-9803-0f5808f77487)
+
+Thanks Yuuki for showing me how to do this with requests!!! <33333
