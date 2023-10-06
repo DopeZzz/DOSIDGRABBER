@@ -1,10 +1,8 @@
+import requests
+from bs4 import BeautifulSoup
 import getpass
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+
+#Thanks Yuuki for showing me how to do this with requests!!! <33333
 
 def fancy_print():
     ascii_art = """
@@ -27,43 +25,25 @@ def get_user_input():
     return username, password
 
 def obtain_sid(username, password):
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--log-level=3")
-    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-
-    s = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=s, options=chrome_options)
-
-    driver.get("https://www.darkorbit.com/?originalURL=darkorbit.com&")
-
-    accept_button = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".css-47sehv"))
-    )
-    accept_button.click()
-
-    user_field = driver.find_element(By.ID, "bgcdw_login_form_username")
-    password_field = driver.find_element(By.ID, "bgcdw_login_form_password")
-
-    user_field.send_keys(username)
-    password_field.send_keys(password)
-
-    login_button = driver.find_element(By.CSS_SELECTOR, ".bgcdw_button.bgcdw_login_form_login")
-    login_button.click()
-
-    WebDriverWait(driver, 10).until(EC.url_contains(".darkorbit.com/indexInternal.es"))
-
-    current_url = driver.current_url
-    server = current_url.split("//")[1].split(".")[0]
-
-    cookie_dosid = driver.get_cookie("dosid")
+    session = requests.Session()
+    url = "https://darkorbit.com"
+    response = session.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    login_form = soup.find("form", {"name": "bgcdw_login_form"})
+    action_url = login_form.get("action")
+    payload = {
+        "username": username,
+        "password": password
+    }
+    login_response = session.post(action_url, data=payload)
+    cookie_dosid = login_response.cookies.get("dosid")
     sid = None
     if cookie_dosid:
-        sid = cookie_dosid["value"]
-
-    driver.quit()
+        sid = cookie_dosid
+    current_url = login_response.url
+    server = current_url.split("//")[1].split(".")[0]
     return sid, server
+
 
 def main():
     username, password = get_user_input()
@@ -74,3 +54,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
